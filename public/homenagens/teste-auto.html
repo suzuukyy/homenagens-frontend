@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body { background: #0d4548; margin: 0; font-family: Arial, sans-serif; }
+    .container-flex {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 900px;
+      margin: 32px auto;
+      flex-wrap: wrap;
+    }
+    .container { max-width: 600px; margin: 32px auto; background: #338289; border-radius: 8px; overflow: hidden; }
+    .homenagem-box {
+      background: #338289;
+      border-radius: 8px;
+      overflow: hidden;
+      min-width: 320px;
+      max-width: 420px;
+      flex: 1 1 320px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+    }
+    .mensagens-box {
+      background: #338289;
+      border-radius: 8px;
+      overflow: hidden;
+      min-width: 320px;
+      max-width: 420px;
+      flex: 1 1 320px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+    }
+    .header { text-align: center; padding: 24px 0 0 0; color: #fff; font-size: 18px; }
+    .foto-circular { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; margin: 12px auto 0 auto; display: block; background: #eee; }
+    .nome { font-family: 'Pacifico', cursive; color: #fff; text-align: center; font-size: 2.1rem; margin: 18px 0 0 0; }
+    .datas { display: flex; justify-content: center; gap: 38px; margin: 18px 0 0 0; }
+    .datas-col { display: flex; flex-direction: column; align-items: center; }
+    .datas-col .icon { font-size: 1.4rem; color: #fff; }
+    .datas-col .txt { margin-top: 6px; color: #222; font-size: 1.08rem; }
+    .msg-box { background: #6db5b8; padding: 32px 24px 40px 24px; }
+    .msg-box h3 { color: #fff; text-align: center; margin-bottom: 18px; }
+    .msg-box input, .msg-box textarea { width: 100%; padding: 10px; border-radius: 4px; border: none; margin-bottom: 10px; font-size: 1rem; }
+    .msg-box textarea { min-height: 70px; }
+    .msg-box button { width: 100%; background: #43c36a; color: #fff; border: none; border-radius: 4px; padding: 12px 0; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 8px; }
+    @media (max-width: 900px) {
+      .container-flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+      }
+      .homenagem-box, .mensagens-box {
+        max-width: 100%;
+      }
+    }
+  .tabs {
+  display: flex;
+  justify-content: center;
+  background: #2a6b6e;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 0;
+}
+.tab-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 16px 32px;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 8px 8px 0 0;
+}
+.tab-btn.active, .tab-btn:hover {
+  background: #338289;
+  color: #fff;
+}
+</style>
+</head>
+<body>
+  <button onclick="document.getElementById('formMsg').scrollIntoView({behavior: 'smooth'});" style="display:block;margin:24px auto 0 auto;padding:12px 32px;background:#338289;color:#fff;font-size:1.1rem;font-weight:bold;border:none;border-radius:8px;cursor:pointer;">Mensagens</button>
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-homenagem" onclick="showTab('homenagem')">Homenagem</button>
+      <button class="tab-btn" id="tab-mensagens" onclick="showTab('mensagens')">Mensagens</button>
+    </div>
+    <div id="tab-content-homenagem">
+      <div class="header">Deixe Sua Homenagem</div>
+      <img class="foto-circular" src="" alt="Homenageado">
+      <div class="nome">Teste Auto</div>
+      <div class="datas">
+        <div class="datas-col">
+          <span class="icon">⭐</span>
+          <span class="txt">2000-01-01</span>
+        </div>
+        <div class="datas-col">
+          <span class="icon">✝️</span>
+          <span class="txt">2020-01-01</span>
+        </div>
+      </div>
+      <div class="msg-box">
+        <h3>Envie uma mensagem</h3>
+        <form id="formMsg" autocomplete="off">
+          <input type="text" name="nome" placeholder="Digite seu nome" required />
+          <input type="text" name="telefone" placeholder="Agora seu telefone" />
+          <input type="email" name="email" placeholder="E seu e-mail" required />
+          <textarea name="mensagem" placeholder="Deixe aqui a sua mensagem" required></textarea>
+          <button type="submit">Enviar mensagem</button>
+        </form>
+      </div>
+    </div>
+    <div id="tab-content-mensagens" style="display:none">
+      <div class="msg-box">
+        <h3>Mensagens enviadas</h3>
+        <div id="mensagens-log"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function showTab(tab) {
+      document.getElementById('tab-content-homenagem').style.display = tab === 'homenagem' ? '' : 'none';
+      document.getElementById('tab-content-mensagens').style.display = tab === 'mensagens' ? '' : 'none';
+      document.getElementById('tab-homenagem').classList.toggle('active', tab === 'homenagem');
+      document.getElementById('tab-mensagens').classList.toggle('active', tab === 'mensagens');
+      if(tab === 'mensagens') renderMensagensLog();
+    }
+
+    // Busca mensagens do backend e exibe na aba 'Mensagens'
+    async function getMensagensLog() {
+      try {
+        const resp = await fetch('/api/mensagens/teste-auto');
+        if (!resp.ok) return [];
+        return await resp.json();
+      } catch {
+        return [];
+      }
+    }
+    async function renderMensagensLog() {
+      const msgs = await getMensagensLog();
+      const log = document.getElementById('mensagens-log');
+      if(!msgs.length) { log.innerHTML = '<p style="color:#fff">Nenhuma mensagem enviada ainda.</p>'; return; }
+      log.innerHTML = msgs.map(m => `
+    <div style="background:#f8fafc;border-radius:8px;padding:16px 18px 14px 18px;margin-bottom:18px;border:1px solid #d6e3e9;box-shadow:0 2px 6px #0001;position:relative;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+        <div style="font-weight:bold;font-size:1.13em;color:#185c5e;">${m.nome}</div>
+        <div style="color:#888;font-size:0.96em;">${m.email}</div>
+        ${m.telefone ? `<div style='color:#aaa;font-size:0.93em;'>${m.telefone}</div>` : ''}
+        <div style="margin-left:auto;color:#4b6c7a;font-size:0.97em;">${m.dataHora||''}</div>
+      </div>
+      <div style="color:#333;white-space:pre-line;font-size:1.08em;margin-bottom:2px;">${m.mensagem}</div>
+    </div>
+  `).join('');
+    }
+    document.getElementById('formMsg').onsubmit = async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const now = new Date();
+      const pad = n => n.toString().padStart(2, '0');
+      const dataHora = pad(now.getDate()) + '/' + pad(now.getMonth()+1) + '/' + now.getFullYear() + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+      const msg = {
+        nome: form.nome.value,
+        telefone: form.telefone.value,
+        email: form.email.value,
+        mensagem: form.mensagem.value,
+        dataHora: dataHora
+      };
+      try {
+        const resp = await fetch('/api/mensagens/teste-auto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(msg)
+        });
+        if (resp.ok) {
+          form.reset();
+          alert('Mensagem enviada!');
+          renderMensagensLog();
+        } else {
+          alert('Erro ao enviar mensagem. Tente novamente.');
+        }
+      } catch {
+        alert('Erro de conexão com o servidor.');
+      }
+    };
+  </script>
+      </form>
+    </div>
+  </div>
+  <script src="../mensagens/mensagens.js"></script>
+</body>
+</html>
